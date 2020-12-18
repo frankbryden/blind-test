@@ -1,9 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import Game from './Game';
-const electron = window.require("electron")
+import Menu from './Menu';
 
-console.log(electron);
 
 function App() {
 	return (
@@ -21,7 +20,7 @@ function App() {
 				>
 					Learn React
         		</a>
-				<Game />
+				<Menu />
 			</header>
 		</div>
 	);
