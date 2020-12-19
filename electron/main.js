@@ -4,6 +4,7 @@ const path = require('path');
 const { ipcMain } = require('electron');
 const { SpotifyAuthentication } = require('./spotifyAuth');
 const { SpotifyControls } = require('./spotifyControls');
+//const { queryByTitle } = require('@testing-library/react');
 
 ipcMain.handle('perform-action', (event, ...args) => {
     console.log(args);
@@ -56,7 +57,9 @@ class Main {
             
         });
         this.mainWindow.on('closed', () => {
+            console.log('closed');
             this.mainWindow = null;
+            app.exit(0);
         });
     }
 }

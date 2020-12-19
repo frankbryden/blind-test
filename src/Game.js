@@ -1,6 +1,6 @@
 import React from 'react';
 //const { ipcRenderer } = window.require('electron');
-const electron = window.require("electron")
+// const electron = window.require("electron")
 
 
 class Game extends React.Component {
@@ -11,7 +11,7 @@ class Game extends React.Component {
     componentDidMount() {
         console.log("mounted!");
         
-        electron.ipcRenderer.invoke('perform-action', {name: "Frankie"})
+        // electron.ipcRenderer.invoke('perform-action', {name: "Frankie"})
         //window.ipcRenderer.invoke('perform-action', )
     }
 
