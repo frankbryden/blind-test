@@ -55,11 +55,12 @@ class PlayerSelectionList extends React.Component {
 
     checkReady(players) {
         let ready;
-        if (players.filter(player => !player.saved).length == 0) {
+        if (players.length > 0 && players.filter(player => !player.saved).length == 0) {
             ready = true;
         } else {
             ready = false;
         }
+        console.log(`Ready is now ${ready}`);
         this.props.setReady(ready, players);
     }
 

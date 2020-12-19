@@ -4,6 +4,7 @@ const path = require('path');
 const { ipcMain } = require('electron');
 const { SpotifyAuthentication } = require('./spotifyAuth');
 const { SpotifyControls } = require('./spotifyControls');
+const Game = require('./game');
 //const { queryByTitle } = require('@testing-library/react');
 
 ipcMain.handle('perform-action', (event, ...args) => {
@@ -17,6 +18,11 @@ class Main {
         this.authReady = this.authReady.bind(this);
         this.createWindow = this.createWindow.bind(this);
         this.spotifyAuth = new SpotifyAuthentication();
+
+        ipcMain.handle('start-game', (event, gameData) => {
+            console.log(gameData);
+            this.game = new Game(this.mainWindow, gameData.players, gameData.playlistUri);
+        });
     }
     authReady(token) {
         this.spotifyControls = new SpotifyControls(token);
@@ -49,6 +55,7 @@ class Main {
         
         const startURL = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`;
     
+        //this.mainWindow.removeMenu();
         this.mainWindow.loadURL(startURL);
         this.mainWindow.once('ready-to-show', () => {
             
@@ -64,8 +71,4 @@ class Main {
     }
 }
 const main = new Main();
-
-ipcMain.handle('start-game', (event, players) => {
-    console.log(players);
-});
 app.on('ready', main.createWindow);
