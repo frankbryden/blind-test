@@ -12,7 +12,7 @@ class Menu extends React.Component {
 
         this.state = {
             spotifyAuth: false,
-            playlistUri: '',
+            playlistUri: 'spotify:playlist:22sVoQq0AM56m3uWvJe3Sj',
             playersReady: false,
         };
     }

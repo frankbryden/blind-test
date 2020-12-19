@@ -10,29 +10,53 @@ class SpotifyControls {
     }
 
     fetchPlaybackInfo() {
-        this.fetchResource('get', '/player/currently-playing');
+        this.fetchResource('get', '/me/player/currently-playing');
     }
 
-    enqueue(){
-        this.fetchResource('post', '/player/queue?uri=spotify:track:0afhq8XCExXpqazXczTSve');
+    fetchPlaylistContents(playlistUri) {
+        let id = playlistUri.split(":")[2];
+        return this.fetchResource('get', `/playlists/${id}/tracks`);
+    }
+
+    enqueue(resourceUri){
+        return this.fetchResource('post', `/me/player/queue?uri=${resourceUri}`);
     }
 
     nextSong() {
-        this.fetchResource('post', '/player/next');
+        this.fetchResource('post', '/me/player/next');
+    }
+
+    seekStart() {
+        return this.fetchResource('put', `/me/player/seek?position_ms=${0}`);
     }
 
     pause() {
-        this.fetchResource('put', '/player/pause');
+        this.fetchResource('put', '/me/player/pause');
+    }
+
+    play() {
+        this.fetchResource('put', '/me/player/play');
     }
 
     fetchResource(method, endpoint) {
-        const url = 'https://api.spotify.com/v1/me' + endpoint;
+        const url = 'https://api.spotify.com/v1' + endpoint;
         const req = this.token.sign({
             method: method,
             url: url
         });
-        fetch(url, {method: req.method, headers: req.headers}).then(val => val.text())
-                .then(json => {});
+        console.log(`Fetching ${url}`);
+        return fetch(url, {method: req.method, headers: req.headers}).then(val => {
+            if (val.status != 204){
+                return val.json();
+            }
+        });
+                // .then(json => {
+                //     console.log(json);
+                //     if (responseClbk != undefined) {
+                //         //the calling method passed a callback and wishes to get a copy of the obtained data
+                //         responseClbk(json);
+                //     }
+                // });
     }
 
 

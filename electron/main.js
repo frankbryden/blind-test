@@ -7,9 +7,6 @@ const { SpotifyControls } = require('./spotifyControls');
 const Game = require('./game');
 //const { queryByTitle } = require('@testing-library/react');
 
-ipcMain.handle('perform-action', (event, ...args) => {
-    console.log(args);
-});
  
 let mainWindow;
 
@@ -21,25 +18,45 @@ class Main {
 
         ipcMain.handle('start-game', (event, gameData) => {
             console.log(gameData);
-            this.game = new Game(this.mainWindow, gameData.players, gameData.playlistUri);
+            console.log("We now need to fetch the tracks from the playlist");
+            this.spotifyControls.fetchPlaylistContents(gameData.playlistUri)
+                .then(json => {
+                    let tracksData = this.shuffle(this.parseTracks(json));
+                    //create new game, with tracks here.
+                    this.game = new Game(this.mainWindow, this.spotifyControls, gameData.players, tracksData);
+                });
+            
+            //this.spotifyControls.enqueue('spotify:track:0afhq8XCExXpqazXczTSve');
+            
         });
     }
     authReady(token) {
         this.spotifyControls = new SpotifyControls(token);
         //this.spotifyControls.fetchPlaybackInfo();
-        //this.playRound();
     }
 
-    async playRound(){
-        this.spotifyControls.enqueue();
-        this.spotifyControls.nextSong();
-        await this.sleep(1000);
-        this.spotifyControls.pause();
+    parseTracks(tracksData) {
+        return tracksData.items.map(trackData => trackData.track.uri);
     }
 
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    shuffle(array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+      
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+      
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+      
+          // And swap it with the current element.
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+      
+        return array;
+      }
     
     createWindow() {
         console.log("Creating window...")
