@@ -3,6 +3,9 @@ import './App.css';
 import Game from './Game';
 import Menu from './Menu';
 import React from 'react';
+import { Layout } from 'antd';
+
+const { Header, Footer, Sider, Content } = Layout;
 
 
 class App extends React.Component {
@@ -24,7 +27,16 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<header className="App-header">
+				<Layout>
+					<Header>
+						<h1>Blind Test</h1>	
+					</Header>
+					<Content>
+						{this.state.playing ? 
+							<Game /> :
+							<Menu startGame={this.startGame} />}
+					</Content>
+				</Layout>
 					{/* <img src={logo} className="App-logo" alt="logo" />
 					<p>
 						Edit <code>src/App.js</code> and save me to reload.
@@ -36,14 +48,7 @@ class App extends React.Component {
 						rel="noopener noreferrer"
 					>
 						Learn React
-					</a> */}
-					<div className="spacing"/>
-					<h1>Blind Test</h1>	
-				</header>
-				{this.state.playing ? 
-				<Game /> :
-				<Menu startGame={this.startGame} />}
-				
+					</a> */}		
 			</div>
 		);
 	}

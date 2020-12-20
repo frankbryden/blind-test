@@ -22,6 +22,7 @@ class Main {
             this.spotifyControls.fetchPlaylistContents(gameData.playlistUri)
                 .then(json => {
                     let tracksData = this.shuffle(this.parseTracks(json));
+                    console.log(tracksData);
                     //create new game, with tracks here.
                     this.game = new Game(this.mainWindow, this.spotifyControls, gameData.players, tracksData, gameData.autoNextTurn, gameData.roundCount);
                 });
@@ -36,7 +37,13 @@ class Main {
     }
 
     parseTracks(tracksData) {
-        return tracksData.items.map(trackData => trackData.track.uri);
+        return tracksData.items.map(trackData => {
+            return {
+                uri: trackData.track.uri,
+                artists: trackData.track.artists.map(artist => artist.name),
+                title: trackData.track.name
+            };
+        });
     }
 
     shuffle(array) {

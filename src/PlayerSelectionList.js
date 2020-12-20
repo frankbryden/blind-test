@@ -1,5 +1,6 @@
 import React from 'react';
 import PlayerInputField from './PlayerInputField';
+import {Button, List} from 'antd';
 
 class PlayerSelectionList extends React.Component {
     constructor(props) {
@@ -86,7 +87,7 @@ class PlayerSelectionList extends React.Component {
         console.log(this.state);
         return (
             <div>
-                <button onClick={this.addPlayer}>Add Player</button>
+                <Button onClick={this.addPlayer}>Add Player</Button>
                 <ul>
                     {this.state.players.map((player, playerId) => (
                         <li key={playerId}>

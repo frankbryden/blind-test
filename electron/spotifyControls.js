@@ -47,7 +47,11 @@ class SpotifyControls {
         console.log(`Fetching ${url}`);
         return fetch(url, {method: req.method, headers: req.headers}).then(val => {
             if (val.status != 204){
+                console.log("We have something other than 204")
                 return val.json();
+            } else {
+                console.log("returning promise");
+                return new Promise(resolve => resolve('EMPTY'));
             }
         });
                 // .then(json => {

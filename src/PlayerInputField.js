@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Input, Button, Col, Row } from 'antd';
 
 class PlayerInputField extends React.Component {
     constructor(props) {
@@ -27,9 +28,18 @@ class PlayerInputField extends React.Component {
     render() {
         return (
             <>
-                <input type="text" disabled={this.props.saved} value={this.props.value} onChange={this.handleChange} />
-                <button onClick={this.handleSaveBtnClick}>{this.props.saved ? 'Edit' : 'Save'}</button>
-                <button onClick={this.handleRemoveBtnClick}>Remove</button>
+                <Row>
+                    <Col span={12}>
+                        <Input type="text" disabled={this.props.saved} value={this.props.value} onChange={this.handleChange} />
+                    </Col>
+                    <Col span={6}>
+                        <Button onClick={this.handleSaveBtnClick}>{this.props.saved ? 'Edit' : 'Save'}</Button>
+                        <Button onClick={this.handleRemoveBtnClick}>Remove</Button>  
+                    </Col>
+                </Row>
+                
+                
+                
             </>
         )
     }

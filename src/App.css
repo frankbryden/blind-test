@@ -1,10 +1,22 @@
+@import '~antd/dist/antd.css';
+
+.ant-layout-header {
+  background-color: darkcyan;
+}
 .App {
   height:100vh;
-  text-align: center;
+  /* text-align: center; */
   background-color: #282c34;
   align-items: center;
   color: white;
   margin-top: 0px;
+}
+
+.ant-layout-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 48em; 
+  height: 100vh;
 }
 
 .spacing {
