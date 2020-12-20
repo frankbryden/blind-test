@@ -23,7 +23,7 @@ class Main {
                 .then(json => {
                     let tracksData = this.shuffle(this.parseTracks(json));
                     //create new game, with tracks here.
-                    this.game = new Game(this.mainWindow, this.spotifyControls, gameData.players, tracksData);
+                    this.game = new Game(this.mainWindow, this.spotifyControls, gameData.players, tracksData, gameData.autoNextTurn, gameData.roundCount);
                 });
             
             //this.spotifyControls.enqueue('spotify:track:0afhq8XCExXpqazXczTSve');

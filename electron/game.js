@@ -1,12 +1,14 @@
 const electron = require('electron');
 
 class Game {
-    constructor(winHandle, spotifyController, players, tracks) {
+    constructor(winHandle, spotifyController, players, tracks, autoNextTurn, roundCount) {
         this.winHandle = winHandle;
         this.spotifyController = spotifyController;
         this.players = players;
         this.tracks = tracks;
         this.currentTrack = 0;
+        this.autoNextTurn = autoNextTurn;
+        this.roundCount = roundCount;
 
         this.playRound = this.playRound.bind(this);
         //this.nextRound = this.nextRound.bind(this);
@@ -29,7 +31,12 @@ class Game {
     notifyGameStart() {
         console.log("notifyGameStart")
         this.spotifyController.enqueue(this.tracks[this.currentTrack]);
-        this.winHandle.webContents.send('game-data', {players:this.players, tracks:this.tracks});
+        this.winHandle.webContents.send('game-data', {
+            players: this.players,
+            tracks: this.tracks,
+            autoNextTurn: this.autoNextTurn,
+            roundCount: this.state.roundCount
+        });
     }
 
     async playRound(currentTry){
